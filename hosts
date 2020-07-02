@@ -1,11 +1,14 @@
 [instance]
+10.16.29.194
 # List of hosts which we want to gather information from
-localhost ansible_connection=local
+#localhost ansible_connection=local
 
 [kubernetes]
+10.16.29.194
 # List of hosts to kick off backpack on all associated nodes
-localhost ansible_connection=local
+#localhost ansible_connection=local
 
 [stockpile]
+10.16.29.194
 # The host stockpile is running from
-localhost ansible_connection=local
+#localhost ansible_connection=local

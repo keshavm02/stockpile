@@ -1,0 +1,18 @@
+---
+
+- name: check for nvidia-smi
+  command: which nvidia-smi
+  register: nvidia_smi_installed
+  ignore_errors: yes
+
+
+- name: capture nvidia_smi
+  command: nvidia-smi
+  register: nvidia_smi_info
+  when: nvidia_smi_installed.rc == 0
+
+- name: set the collected gpu info as facts
+  set_fact:
+    stockpile_gpuinfo:
+      nvidia-smi: "{{ nvidia_smi_info.stdout }}"
+  when: nvidia_smi_installed.rc == 0
