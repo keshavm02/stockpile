@@ -1,0 +1,21 @@
+---
+
+- name: check for dcgm
+  stat:
+    path: /usr/bin/nvidia-smi
+  register: dcgm_path
+  ignore_errors: yes
+
+
+- block:
+  - name: capture dcgm power and temperature
+    command: nvidia-smi -q -x
+    register: dcgm_power_temp
+
+  - name: set the collected gpu info as facts
+    set_fact:
+      stockpile_dcgm:
+        xml: "{{ dcgm_power_temp.stdout }}"
+        error: "{{ dcgm_power_temp.stderr }}"
+  when: dcgm_path.stat.exists
+

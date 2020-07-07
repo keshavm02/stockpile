@@ -1,0 +1,22 @@
+---
+
+- name: check for nvidia-smi
+  stat:
+    path: /usr/bin/nvidia-smi
+  register: nvidia_smi_path
+  ignore_errors: yes
+
+
+- block:
+  - name: capture nvidia_smi power and temperature
+    #command: timeout --preserve-status 2 nvidia-smi dmon -s p
+    command: nvidia-smi -q -x
+    register: nvidia_smi_power_temp
+
+  - name: set the collected gpu info as facts
+    set_fact:
+      stockpile_nvidia_smi_dmon:
+        xml: "{{ nvidia_smi_power_temp.stdout }}"
+        error: "{{ nvidia_smi_power_temp.stderr }}"
+  when: nvidia_smi_path.stat.exists
+

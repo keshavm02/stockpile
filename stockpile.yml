@@ -42,6 +42,8 @@
     - { role: ocp_cluster_config, become: false, tags: ocp_cluster_config }
     - { role: lspci, tags: lspci }
     - { role: gpu, tags: gpu }
+    - { role: nvidia_smi_dmon, tags: nvidia_smi_dmon }
+    - { role: dcgm_dmon, tags: dcgm_dmon }
 
 - hosts: kubernetes
   remote_user: "{{ container_remote_user }}"
